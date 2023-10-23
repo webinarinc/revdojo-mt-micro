@@ -16,5 +16,7 @@
             "name": "kylynangel15",
             "email": "61867883+kylynangel15@users.noreply.github.com"
         }
-    ]
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
