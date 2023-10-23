@@ -1,6 +1,7 @@
 {
     "name": "revdojo/mt",
     "description": "Revdojo MT setup",
+    "license": "MIT",
     "require": {
         "laravel/framework": "^10.28",
         "laravel/sanctum": "^3.3"
