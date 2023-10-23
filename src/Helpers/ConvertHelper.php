@@ -1,6 +1,6 @@
 <?php
 
-namespace Revdojo\MT\Helper;
+namespace Revdojo\MT\Helpers;
 
 use Illuminate\Support\Str;
 

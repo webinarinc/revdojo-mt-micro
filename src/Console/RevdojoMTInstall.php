@@ -5,8 +5,8 @@ namespace Revdojo\MT\Console;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
-use Revdojo\MT\Helper\ConvertHelper;
-use Revdojo\MT\Helper\GenerateHelper;
+use Revdojo\MT\Helpers\ConvertHelper;
+use Revdojo\MT\Helpers\GenerateHelper;
 class RevdojoMTInstall extends Command
 {
     /**
