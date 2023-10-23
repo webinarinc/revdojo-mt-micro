@@ -28,6 +28,25 @@ class RevdojoMTInstall extends Command
      */
     public function handle()
     {
+        $this->generateConfigFile();
+        $this->setupDockerFile();
+    }
+
+    protected function setupDockerFile()
+    {
+        $composeFilePath = base_path('docker-compose.yml');
+        $composeContent = file_get_contents($composeFilePath);
+        $updatedContent = str_replace('laravel.test', env('REVOJO_MT_DB_NAME'), $composeContent);
+        file_put_contents($composeFilePath, $updatedContent);
+        $this->info('Docker Compose file updated successfully.');
+    }
+
+    protected function generateConfigFile()
+    {
+        if (config('revdojo-mt.service_system_id')) {
+            return;
+        }
+        
         $friendlyName = ConvertHelper::convertToFriendlyName(env('REVOJO_MT_SERVICE_NAME'));
         $serviceSystemId = GenerateHelper::generateSystemId('service');
 
