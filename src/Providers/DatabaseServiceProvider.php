@@ -20,6 +20,11 @@ class DatabaseServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+
+        if (!config('database.connection.mysql_base_service')) {
+            return;
+        }
+        
         $services = Service::all();
 
         $services->map(function ($service) {
