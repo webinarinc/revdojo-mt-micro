@@ -35,8 +35,8 @@ class RevdojoMTInstall extends Command
         $this->validateEnvs();
 
         $this->setupBaseDB();
+        $this->setupAllDB();
         $this->setupConfigFile();
-        $this->setupDatabase();
         $this->setupDockerFile();
         $this->setupDomainDriven();
     }
@@ -63,6 +63,40 @@ class RevdojoMTInstall extends Command
             ]) : [],
         ];
         Config::set("database.connections.mysql_base_service", $databaseConnection);
+    }
+
+    protected function setupAllDB()
+    {
+        $services = Service::all();
+
+        $services->map(function ($service) {
+            $databaseConnection = [
+                'driver' => 'mysql',
+                'url' => env('DATABASE_URL'),
+                'host' => env('DB_HOST', '127.0.0.1'),
+                'port' => env('DB_PORT', '3306'),
+                'database' => $service->database_name,
+                'username' => env('DB_USERNAME', 'forge'),
+                'password' => env('DB_PASSWORD', ''),
+                'unix_socket' => env('DB_SOCKET', ''),
+                'charset' => 'utf8mb4',
+                'collation' => 'utf8mb4_unicode_ci',
+                'prefix' => '',
+                'prefix_indexes' => true,
+                'strict' => true,
+                'engine' => null,
+                'options' => extension_loaded('pdo_mysql') ? array_filter([
+                    PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+                ]) : [],
+            ];
+            Config::set("database.connections.$service->database_connection", $databaseConnection);
+        });
+
+        
+        if (config('revdojo-mt.service_system_id')) {
+            $myService = $services->where('system_id', config('revdojo-mt.service_system_id'))->first();
+            Config::set("database.default", $myService->database_connection);
+        }
     }
 
     protected function setupDomainDriven()
@@ -105,24 +139,6 @@ class RevdojoMTInstall extends Command
         file_put_contents($composeFilePath, $updatedContent);
         $this->info('Docker Compose file updated successfully.');
     }
-    
-    protected function setupDatabase()
-    {
-        $databaseName = env('REVOJO_MT_DB_NAME');
-
-        $result = DB::select("SELECT SCHEMA_NAME FROM information_schema.SCHEMATA WHERE SCHEMA_NAME = ?", [$databaseName]);
-
-        if (!empty($result)) {
-           return $this->error('Database already exist.');
-        }
-        $charset = config('database.connections.mysql.charset');
-        $collation = config('database.connections.mysql.collation');
-
-        DB::statement("CREATE DATABASE $databaseName CHARACTER SET $charset COLLATE $collation");
-
-        $this->info("Database $databaseName created successfully.");
-    }
-
     protected function setupConfigFile()
     {
         if (config('revdojo-mt.service_system_id')) {
