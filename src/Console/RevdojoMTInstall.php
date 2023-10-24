@@ -34,69 +34,8 @@ class RevdojoMTInstall extends Command
     {
         $this->validateEnvs();
 
-        $this->setupBaseDB();
-        $this->setupAllDB();
         $this->setupConfigFile();
-        $this->setupDockerFile();
         $this->setupDomainDriven();
-    }
-
-    protected function setupBaseDB()
-    {
-        $databaseConnection = [
-            'driver' => 'mysql',
-            'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
-            'unix_socket' => env('DB_SOCKET', ''),
-            'charset' => 'utf8mb4',
-            'collation' => 'utf8mb4_unicode_ci',
-            'prefix' => '',
-            'prefix_indexes' => true,
-            'strict' => true,
-            'engine' => null,
-            'options' => extension_loaded('pdo_mysql') ? array_filter([
-                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
-            ]) : [],
-        ];
-        Config::set("database.connections.mysql_base_service", $databaseConnection);
-    }
-
-    protected function setupAllDB()
-    {
-        $services = Service::all();
-
-        $services->map(function ($service) {
-            $databaseConnection = [
-                'driver' => 'mysql',
-                'url' => env('DATABASE_URL'),
-                'host' => env('DB_HOST', '127.0.0.1'),
-                'port' => env('DB_PORT', '3306'),
-                'database' => $service->database_name,
-                'username' => env('DB_USERNAME', 'forge'),
-                'password' => env('DB_PASSWORD', ''),
-                'unix_socket' => env('DB_SOCKET', ''),
-                'charset' => 'utf8mb4',
-                'collation' => 'utf8mb4_unicode_ci',
-                'prefix' => '',
-                'prefix_indexes' => true,
-                'strict' => true,
-                'engine' => null,
-                'options' => extension_loaded('pdo_mysql') ? array_filter([
-                    PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
-                ]) : [],
-            ];
-            Config::set("database.connections.$service->database_connection", $databaseConnection);
-        });
-
-        
-        if (config('revdojo-mt.service_system_id')) {
-            $myService = $services->where('system_id', config('revdojo-mt.service_system_id'))->first();
-            Config::set("database.default", $myService->database_connection);
-        }
     }
 
     protected function setupDomainDriven()
@@ -131,14 +70,6 @@ class RevdojoMTInstall extends Command
         return $composerJson;
     }
 
-    protected function setupDockerFile()
-    {
-        $composeFilePath = base_path('docker-compose.yml');
-        $composeContent = file_get_contents($composeFilePath);
-        $updatedContent = str_replace('laravel.test', env('REVOJO_MT_DB_NAME'), $composeContent);
-        file_put_contents($composeFilePath, $updatedContent);
-        $this->info('Docker Compose file updated successfully.');
-    }
     protected function setupConfigFile()
     {
         if (config('revdojo-mt.service_system_id')) {
