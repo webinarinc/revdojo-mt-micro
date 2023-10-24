@@ -41,7 +41,7 @@ class DatabaseServiceProvider extends ServiceProvider
     public function boot(): void
     {
 
-        if (!config('database.connection.mysql_base_service')) {
+        if (!config('database.connections.mysql_base_service')) {
             return;
         }
         
