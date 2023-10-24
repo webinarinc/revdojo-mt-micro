@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Config;
 use PDO;
 use Revdojo\MT\Models\Service;
+use Illuminate\Support\Facades\App;
 class DatabaseServiceProvider extends ServiceProvider
 {
     /**
@@ -40,8 +41,7 @@ class DatabaseServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-
-        if (!config('database.connections.mysql_base_service')) {
+        if (!config('database.connections.mysql_base_service') || App::runningInConsole()) {
             return;
         }
         
