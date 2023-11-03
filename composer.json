@@ -4,7 +4,8 @@
     "license": "MIT",
     "require": {
         "laravel/framework": "^10.28",
-        "laravel/sanctum": "^3.3"
+        "laravel/sanctum": "^3.3",
+        "stancl/tenancy": "^3.7"
     },
     "autoload": {
         "psr-4": {
