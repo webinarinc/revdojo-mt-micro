@@ -1,6 +1,6 @@
 <?php
 
-namespace Revdojo\MT\Providers;
+namespace Revdojo\MT;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Config;
@@ -36,7 +36,7 @@ class RevdojoMTServiceProvider extends ServiceProvider
         $this->app['router']->pushMiddlewareToGroup('api', CheckForMaintenance::class);
 
         $this->publishes([
-            __DIR__.'/../../config/tenancy.php' => config_path('tenancy.php'),
+            __DIR__.'/../config/tenancy.php' => config_path('tenancy.php'),
         ], 'tenancy');
     }
 }
