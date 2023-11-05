@@ -22,9 +22,14 @@ class RevdojoMTServiceProvider extends ServiceProvider
                 RevdojoMTInstall::class,
             ]);
         }
-        $this->app->register(DatabaseServiceProvider::class);
-        $this->app->register(TenancyServiceProvider::class);
-        $this->app->register(SubDomainServiceProvider::class);
+
+        try {
+            $this->app->register(DatabaseServiceProvider::class);
+            $this->app->register(TenancyServiceProvider::class);
+            $this->app->register(SubDomainServiceProvider::class);
+        } catch (\Throwable $th) {
+            return;
+        }
     }
 
     /**
