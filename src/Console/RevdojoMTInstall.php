@@ -3,14 +3,11 @@
 namespace Revdojo\MT\Console;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use Revdojo\MT\Helpers\ConvertHelper;
 use Revdojo\MT\Helpers\GenerateHelper;
 use Revdojo\MT\Models\Service;
-use DB;
-use PDO;
-use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Artisan;
 class RevdojoMTInstall extends Command
 {
     /**
@@ -35,6 +32,7 @@ class RevdojoMTInstall extends Command
         $this->validateEnvs();
 
         $this->setupConfigFile();
+        $this->setupTenancyConfig();
         $this->setupDomainDriven();
     }
 
@@ -60,6 +58,14 @@ class RevdojoMTInstall extends Command
         $this->info('Successfully registered all services to composer.json. Please run composer dumpautoload');
     }
 
+    protected function setupTenancyConfig() 
+    {
+        Artisan::call('vendor:publish', [
+            '--tag' => 'tenancy',
+        ]);
+
+        $this->info('Successfully added tenancy configuration.');
+    }
 
     protected function registerPsr4Autoload($composerJson, $autoloadData)
     {
