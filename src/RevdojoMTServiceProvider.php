@@ -32,12 +32,15 @@ class RevdojoMTServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $this->commands([
+            RevdojoMTInstall::class,
+        ]);
+
         $this->app['router']->pushMiddlewareToGroup('web', CheckForMaintenance::class);
         $this->app['router']->pushMiddlewareToGroup('api', CheckForMaintenance::class);
 
         $this->publishes([
-            __DIR__ . '/Config/tenancy.php' => config_path('tenancy.php'),
+            __DIR__ . '/../assets/config.php' => config_path('tenancy.php'),
         ], 'tenancy');
-
     }
 }
