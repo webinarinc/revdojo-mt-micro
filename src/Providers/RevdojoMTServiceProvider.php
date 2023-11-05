@@ -37,6 +37,6 @@ class RevdojoMTServiceProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__.'/../config/tenancy.php' => config_path('tenancy.php'),
-        ], 'config');
+        ], 'tenancy');
     }
 }
