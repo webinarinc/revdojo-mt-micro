@@ -34,5 +34,9 @@ class RevdojoMTServiceProvider extends ServiceProvider
     {
         $this->app['router']->pushMiddlewareToGroup('web', CheckForMaintenance::class);
         $this->app['router']->pushMiddlewareToGroup('api', CheckForMaintenance::class);
+
+        $this->publishes([
+            __DIR__.'/../config/tenancy.php' => config_path('tenancy.php'),
+        ], 'config');
     }
 }
