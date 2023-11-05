@@ -9,6 +9,7 @@ use Revdojo\MT\Console\RevdojoMTInstall;
 use Revdojo\MT\Providers\DatabaseServiceProvider;
 use Revdojo\MT\Middleware\CheckForMaintenance;
 use Revdojo\MT\Providers\TenancyServiceProvider;
+use Revdojo\MT\Providers\SubDomainServiceProvider;
 class RevdojoMTServiceProvider extends ServiceProvider
 {
     /**
@@ -23,6 +24,7 @@ class RevdojoMTServiceProvider extends ServiceProvider
         }
         $this->app->register(DatabaseServiceProvider::class);
         $this->app->register(TenancyServiceProvider::class);
+        $this->app->register(SubDomainServiceProvider::class);
     }
 
     /**
@@ -32,6 +34,5 @@ class RevdojoMTServiceProvider extends ServiceProvider
     {
         $this->app['router']->pushMiddlewareToGroup('web', CheckForMaintenance::class);
         $this->app['router']->pushMiddlewareToGroup('api', CheckForMaintenance::class);
-
     }
 }
