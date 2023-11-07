@@ -18,4 +18,9 @@ class TenantBase extends BaseTenant implements TenantWithDatabase
     {
         return $this->hasMany(config('tenancy.domain_model'), 'tenant_base_id');
     }
+
+    public function companies()
+    {
+        return $this->belongsToMany('Revdojo\MT\Models\Company', 'base_service.tenant_company', 'tenant_id', 'company_id')->withPivot('tenant_id');
+    }
 }
