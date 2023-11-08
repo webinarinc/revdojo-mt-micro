@@ -24,7 +24,7 @@ class DatabaseServiceProvider extends ServiceProvider
     public function boot(): void
     {
         try {
-            if (!config('database.connections.mysql_base_service') || !Schema::hasTable('services')) {
+            if (!config('database.connections.mysql_base_service')) {
                 return;
             }
 
