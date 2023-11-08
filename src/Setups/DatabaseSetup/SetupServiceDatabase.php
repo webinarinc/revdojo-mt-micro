@@ -1,8 +1,9 @@
 <?php
 
-namespace Revdojo\MT\Setups\Databases;
+namespace Revdojo\MT\Setups\DatabaseSetup;
 
 use Revdojo\MT\Models\Service;
+use Revdojo\MT\Setups\DatabaseSetup\DatabaseConnection;
 
 class SetupServiceDatabase 
 {

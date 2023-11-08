@@ -3,11 +3,8 @@
 namespace Revdojo\MT\Setups\BaseSetup;
 
 use Illuminate\Support\Facades\File;
-use Revdojo\MT\Setups\RegisterAutoload;
-use Revdojo\MT\Models\Service;
-use Revdojo\MT\Helpers\ConvertHelper;
-
 use Revdojo\MT\Setups\CommandResponse;
+
 class SetupEnv 
 {
     private $responses = [];

@@ -1,13 +1,9 @@
 <?php
 
-namespace Revdojo\MT\Setups\DatabasesSetups;
+namespace Revdojo\MT\Setups\DatabaseSetup;
 
 use DB;
-use Illuminate\Support\Facades\File;
-use Revdojo\MT\Helpers\ConvertHelper;
-use Revdojo\MT\Helpers\GenerateHelper;
 use Revdojo\MT\Setups\CommandResponse;
-use Revdojo\MT\Setups\RevdojoMTConfig;
 class CreateServiceDatabase 
 {
     private $responses = [];

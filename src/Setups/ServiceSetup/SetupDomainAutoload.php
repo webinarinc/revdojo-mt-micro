@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\File;
 use Revdojo\MT\Setups\RegisterAutoload;
 use Revdojo\MT\Models\Service;
 use Revdojo\MT\Setups\CommandResponse;
+
 class SetupDomainAutoload 
 {
     private $responses = [];
