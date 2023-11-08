@@ -1,6 +1,6 @@
 <?php
 
-namespace Revdojo\MT\Commands\Actions;
+namespace Revdojo\MT\Setups;
 
 
 class CommandResponse

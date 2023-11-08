@@ -2,10 +2,11 @@
 
 namespace Revdojo\MT\Providers;
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Config;
-use Revdojo\MT\Actions\Databases\DatabaseConnection;
-use Revdojo\MT\Actions\Databases\SetupServiceDatabase;
+use Revdojo\MT\Setups\Databases\DatabaseConnection;
+use Revdojo\MT\Setups\Databases\SetupServiceDatabase;
 
 class DatabaseServiceProvider extends ServiceProvider
 {
@@ -23,7 +24,7 @@ class DatabaseServiceProvider extends ServiceProvider
     public function boot(): void
     {
         try {
-            if (!config('database.connections.mysql_base_service')) {
+            if (!config('database.connections.mysql_base_service') || !Schema::hasTable('services')) {
                 return;
             }
 

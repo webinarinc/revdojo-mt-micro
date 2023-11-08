@@ -1,6 +1,6 @@
 <?php
 
-namespace Revdojo\MT\Actions\Databases;
+namespace Revdojo\MT\Setups\Databases;
 
 use PDO;
 use Illuminate\Support\Facades\Config;

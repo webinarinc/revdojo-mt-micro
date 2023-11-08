@@ -1,11 +1,11 @@
 <?php
 
-namespace Revdojo\MT\Commands\Actions\ServiceSetup;
+namespace Revdojo\MT\Setups\ServiceSetup;
 
 use Illuminate\Support\Facades\File;
-use Revdojo\MT\Actions\RegisterAutoload;
+use Revdojo\MT\Setups\RegisterAutoload;
 use Revdojo\MT\Models\Service;
-use Revdojo\MT\Commands\Actions\CommandResponse;
+use Revdojo\MT\Setups\CommandResponse;
 class SetupDomainAutoload 
 {
     private $responses = [];

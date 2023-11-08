@@ -1,6 +1,6 @@
 <?php
 
-namespace Revdojo\MT\Actions;
+namespace Revdojo\MT\Setups;
 
 use Illuminate\Support\Facades\File;
 

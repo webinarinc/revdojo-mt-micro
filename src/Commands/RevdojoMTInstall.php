@@ -3,8 +3,8 @@
 namespace Revdojo\MT\Commands;
 
 use Illuminate\Console\Command;
-use Revdojo\MT\Commands\Actions\ServiceSetup\SetupConfigFile;
-use Revdojo\MT\Commands\Actions\ServiceSetup\SetupDomainAutoload;
+use Revdojo\MT\Setups\ServiceSetup\SetupConfigFile;
+use Revdojo\MT\Setups\ServiceSetup\SetupDomainAutoload;
 use Illuminate\Support\Facades\Artisan;
 
 class RevdojoMTInstall extends Command

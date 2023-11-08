@@ -6,21 +6,25 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Config;
 use PDO;
 use Revdojo\MT\Commands\RevdojoMTInstall;
+use Revdojo\MT\Commands\GenerateSystemId;
 use Revdojo\MT\Providers\DatabaseServiceProvider;
 use Revdojo\MT\Middleware\CheckForMaintenance;
 use Revdojo\MT\Providers\TenancyServiceProvider;
 use Revdojo\MT\Providers\SubDomainServiceProvider;
 class RevdojoMTServiceProvider extends ServiceProvider
 {
-    /**
-     * Register services.
-     */
+     protected function runCommands() 
+     {
+         $this->commands([
+             RevdojoMTInstall::class,
+             GenerateSystemId::class,
+         ]);
+     }
+
     public function register(): void
     {
         if ($this->app->runningInConsole()) {
-            $this->commands([
-                RevdojoMTInstall::class,
-            ]);
+            $this->runCommands();
         }
 
         try {
@@ -32,14 +36,9 @@ class RevdojoMTServiceProvider extends ServiceProvider
         }
     }
 
-    /**
-     * Bootstrap services.
-     */
     public function boot(): void
     {
-        $this->commands([
-            RevdojoMTInstall::class,
-        ]);
+        $this->runCommands();
 
         $this->app['router']->pushMiddlewareToGroup('web', CheckForMaintenance::class);
         $this->app['router']->pushMiddlewareToGroup('api', CheckForMaintenance::class);
