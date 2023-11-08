@@ -5,8 +5,8 @@ namespace Revdojo\MT\Providers;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Config;
-use Revdojo\MT\Setups\Databases\DatabaseConnection;
-use Revdojo\MT\Setups\Databases\SetupServiceDatabase;
+use Revdojo\MT\Setups\DatabaseSetup\DatabaseConnection;
+use Revdojo\MT\Setups\DatabaseSetup\SetupServiceDatabase;
 
 class DatabaseServiceProvider extends ServiceProvider
 {
