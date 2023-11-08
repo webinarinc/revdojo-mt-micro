@@ -5,7 +5,7 @@ namespace Revdojo\MT;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Config;
 use PDO;
-use Revdojo\MT\Console\RevdojoMTInstall;
+use Revdojo\MT\Commands\RevdojoMTInstall;
 use Revdojo\MT\Providers\DatabaseServiceProvider;
 use Revdojo\MT\Middleware\CheckForMaintenance;
 use Revdojo\MT\Providers\TenancyServiceProvider;
