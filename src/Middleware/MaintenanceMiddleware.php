@@ -6,7 +6,8 @@ use Closure;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Revdojo\MT\Models\Service;
-class CheckForMaintenance
+
+class MaintenanceMiddleware
 {
     public function handle($request, Closure $next)
     {

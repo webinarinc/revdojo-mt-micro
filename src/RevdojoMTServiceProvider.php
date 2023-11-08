@@ -8,7 +8,7 @@ use PDO;
 use Revdojo\MT\Commands\RevdojoMTInstall;
 use Revdojo\MT\Commands\GenerateSystemId;
 use Revdojo\MT\Providers\DatabaseServiceProvider;
-use Revdojo\MT\Middleware\CheckForMaintenance;
+use Revdojo\MT\Middleware\MaintenanceMiddleware;
 use Revdojo\MT\Providers\TenancyServiceProvider;
 use Revdojo\MT\Providers\SubDomainServiceProvider;
 class RevdojoMTServiceProvider extends ServiceProvider
@@ -40,8 +40,8 @@ class RevdojoMTServiceProvider extends ServiceProvider
     {
         $this->runCommands();
 
-        $this->app['router']->pushMiddlewareToGroup('web', CheckForMaintenance::class);
-        $this->app['router']->pushMiddlewareToGroup('api', CheckForMaintenance::class);
+        $this->app['router']->pushMiddlewareToGroup('web', MaintenanceMiddleware::class);
+        $this->app['router']->pushMiddlewareToGroup('api', MaintenanceMiddleware::class);
 
         $this->publishes([
             __DIR__ . '/../assets/config.php' => config_path('tenancy.php'),
