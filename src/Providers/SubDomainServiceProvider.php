@@ -4,7 +4,7 @@ namespace Revdojo\MT\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Config;
-use Revdojo\MT\Models\TenantBase;
+use Revdojo\MT\Models\TenantDomain;
 class SubDomainServiceProvider extends ServiceProvider
 {
     /**
@@ -36,10 +36,12 @@ class SubDomainServiceProvider extends ServiceProvider
             preg_match('/^(.*?)\./', $parsedUrl['host'], $matches);
             $subdomain = empty($matches) ? null : $matches[1];
             
-            $tenant = TenantBase::where('id', $subdomain)->first();
+            $domain = TenantDomain::where('sub_domain', $subdomain)->first();
+            $tenant = $domain->tenant;
 
             Config::set('tenancy.tenant', $tenant);
-            Config::set('tenancy.tenant_db', $tenant ? $tenant->tenancy_db_name : 'base_service');
+            Config::set('tenancy.tenant_subdomain', $subdomain);
+            Config::set('tenancy.tenant_db', $tenant ? $domain->tenantBase->tenancy_db_name : 'base_service');
 
         } catch (\Throwable $th) {
             return;

@@ -15,6 +15,8 @@ class TenantDomain extends Model
     protected $fillable = [
         'name',
         'domain',
+        'sub_domain',
+        'root_domain',
         'tenant_id',
         'tenant_base_id',
     ];
