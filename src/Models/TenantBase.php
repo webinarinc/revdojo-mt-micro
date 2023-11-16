@@ -8,21 +8,17 @@ use Stancl\Tenancy\Database\Concerns\HasDatabase;
 use Stancl\Tenancy\Database\Concerns\HasDomains;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Revdojo\MT\Models\TenantDomain;
+use Revdojo\MT\Traits\Fillable;
 
 class TenantBase extends BaseTenant implements TenantWithDatabase
 {
     use HasDatabase,
         HasDomains,
-        SoftDeletes;
+        SoftDeletes,
+        Fillable;
 
     protected $connection = 'mysql_tenant_service';
     protected $table = 'tenants_bases';
-
-    protected $fillable = [
-        'id',
-        'tenant_id',
-        'data',
-    ];
 
     public function tenant()
     {

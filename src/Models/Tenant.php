@@ -7,18 +7,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Revdojo\MT\Models\TenantBase;
 use Revdojo\MT\Models\TenantDomain;
 use Revdojo\MT\Models\Company;
+use Revdojo\MT\Traits\Fillable;
 
 class Tenant extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes,
+        Fillable;
     protected $connection = 'mysql_tenant_service';
 
     protected $table = 'tenants';
-
-    protected $fillable = [
-        'system_id',
-        'name',
-    ];
 
     public function tenantBases()
     {

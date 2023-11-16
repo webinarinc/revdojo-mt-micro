@@ -7,19 +7,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Revdojo\MT\Traits\Fillable;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, 
+        HasFactory, 
+        Notifiable,
+        Fillable;
 
     protected $connection = 'mysql_user_service';
-
-    protected $fillable = [
-        'name',
-        'system_id',
-        'email',
-        'password',
-    ];
 
     protected $hidden = [
         'password',
