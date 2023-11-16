@@ -17,7 +17,7 @@ class User extends Authenticatable
         Fillable;
 
     protected $connection = 'mysql_user_service';
-
+    protected $table = 'users';
     protected $hidden = [
         'password',
         'remember_token',

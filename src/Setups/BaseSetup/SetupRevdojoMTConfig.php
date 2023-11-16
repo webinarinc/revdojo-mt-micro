@@ -17,6 +17,8 @@ class SetupRevdojoMTConfig
             'namespace' => $serviceConfigData['REVOJO_MT_NAMESPACE'],
             'database_name' => $serviceConfigData['REVOJO_MT_DB_NAME'],
             'database_connection' => $serviceConfigData['REVOJO_MT_DB_NAME'],
+            'app_port' => $serviceConfigData['APP_PORT'],
+            'vite_port' => $serviceConfigData['VITE_PORT'],
         ];
 
         $destination = $destinationPath.'/config/revdojo-mt.php';

@@ -36,7 +36,7 @@ class SetupEnv
 
     protected function copyEnv()
     {
-        if (!File::exists($this->destinationPath . '/.env')) {
+        if (File::exists($this->destinationPath . '/.env')) {
             return CommandResponse::run(
                 'error', 
                 "$this->destinationPath . '/.env' already exists. ", 

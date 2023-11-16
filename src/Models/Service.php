@@ -11,5 +11,5 @@ class Service extends Model
     use HasFactory,
         Fillable;
     protected $connection = 'mysql_base_service';
-
+    protected $table = 'services';
 }
