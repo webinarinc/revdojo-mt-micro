@@ -8,7 +8,7 @@ class CreateServiceDatabase
 {
     private $responses = [];
 
-    protected function execute($config)
+    public function execute($config)
     {
         $databaseName = $config['REVOJO_MT_DB_NAME'];
 
