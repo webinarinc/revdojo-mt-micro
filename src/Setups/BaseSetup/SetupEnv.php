@@ -77,6 +77,8 @@ class SetupEnv
             "DB_USERNAME={$this->serviceConfigData['DB_USERNAME']}",
             "DB_PASSWORD={$this->serviceConfigData['DB_PASSWORD']}",
             "FORWARD_DB_PORT={$this->serviceConfigData['FORWARD_DB_PORT']}",
+            "APP_PORT={$this->serviceConfigData['APP_PORT']}",
+            "VITE_PORT={$this->serviceConfigData['VITE_PORT']}",
         ];
 
         $envContents = File::get($envFilePath);
