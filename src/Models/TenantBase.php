@@ -18,7 +18,7 @@ class TenantBase extends BaseTenant implements TenantWithDatabase
         Fillable;
 
     protected $connection = 'mysql_tenant_service';
-    protected $table = 'tenants_bases';
+    protected $table = 'tenant_bases';
 
     public function tenant()
     {

@@ -12,7 +12,7 @@ class TenantDomain extends Model
         Fillable;
     protected $connection = 'mysql_tenant_service';
 
-    protected $table = 'tenants_domains';
+    protected $table = 'tenant_domains';
 
 
     public function tenant()
