@@ -10,9 +10,13 @@ class GenerateHelper
    /**
     * Generate system id manually
     */
-    public static function generateSystemId($prefix) 
+    public static function generateSystemId($prefix, $model = null) 
     {
-       return $prefix .'_'.Str::random(10);
+      if ($model) {
+         $prefix = basename(str_replace('\\', '/', $model::class));
+      }
+      
+      return strtolower($prefix .'_'.Str::random(10));
     }
 
     /**
