@@ -10,6 +10,6 @@ trait Fillable
 {
     public function getFillable()
     {
-        return Schema::getColumnListing($this->getTable());
+        return Schema::connection($this->getConnectionName())->getColumnListing($this->getTable());
     }
 }

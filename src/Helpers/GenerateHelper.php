@@ -13,7 +13,7 @@ class GenerateHelper
     public static function generateSystemId($prefix, $model = null) 
     {
       if ($model) {
-         $prefix = basename(str_replace('\\', '/', $model::class));
+         $prefix = basename(str_replace('\\', '/', $model));
       }
       
       return strtolower($prefix .'_'.Str::random(10));
