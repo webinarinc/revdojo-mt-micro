@@ -35,18 +35,18 @@ class SubDomainServiceProvider extends ServiceProvider
 
             preg_match('/^(.*?)\./', $parsedUrl['host'], $matches);
             $subdomain = empty($matches) ? null : $matches[1];
-            
-            $domain = TenantDomain::where('sub_domain', $subdomain)->first();
+            Config::set('tenancy.tenant_subdomain', $subdomain);
 
+            $domain = TenantDomain::where('sub_domain', $subdomain)->first();
+            
             if (!$domain) {
-                Config::set('tenancy.tenant_subdomain', $subdomain);
                 return;
             }
-
+            
             $tenant = $domain->tenant;
             Config::set('tenancy.tenant', $tenant);
             Config::set('tenancy.tenant_db', $tenant ? $domain->tenantBase->tenancy_db_name : 'base_service');
-
+            
         } catch (\Throwable $th) {
             return;
         }
