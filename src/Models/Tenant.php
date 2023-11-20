@@ -8,11 +8,13 @@ use Revdojo\MT\Models\TenantBase;
 use Revdojo\MT\Models\TenantDomain;
 use Revdojo\MT\Models\Company;
 use Revdojo\MT\Traits\Fillable;
+use Revdojo\MT\Traits\AllRelationships;
 
 class Tenant extends Model
 {
     use SoftDeletes,
-        Fillable;
+        Fillable,
+        AllRelationships;
     protected $connection = 'mysql_tenant_service';
 
     protected $table = 'tenants';
