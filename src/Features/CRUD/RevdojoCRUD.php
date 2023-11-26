@@ -7,34 +7,45 @@ use Revdojo\MT\Helpers\GenerateHelper;
 abstract class RevdojoCRUD
 {
 
-    public static function create($model, $data)
+    public static function create($model, $data, $subTable = true)
     {
+
         $model->fill($data);
 
         $systemId = GenerateHelper::generateSystemId(null,$model::class);
         $model->system_id = $systemId;
         $model->save();
 
-        // SELF::subTables($model, $data);
-        
+        if ($subTable) {
+            SELF::subTables($model, $data);
+        }
+
         return $model;
     }
 
     protected static function subTables($model, $data)
     {
+        if (!method_exists($model, 'allRelationships')) {
+            \Log::error("AllRelationship is not declared to model.");
+            return;
+        }
 
-        // if (!$data->sub_tables) {
-        //     return;
-        // }
+        foreach ($model->allRelationships() as $relationship) {
+            if ($relationship['type'] == 'HasMany' && array_key_exists($relationship['modelRelation'], $data)) {
+                $infos = collect($data[$relationship['modelRelation']]);
+                SELF::subTablesCreate($model, $relationship, $infos);
+            }
+        }
+    }
 
-        // dd($model, $data->sub_tables);
+    protected static function subTablesCreate($model, $relationship, $infos) 
+    {
+        foreach($infos as $info) {
+            $info['system_id'] = GenerateHelper::generateSystemId(null,$relationship['model']);
+            $model->{$relationship['modelRelation']}()->create($info);
 
-        // foreach ($data->sub_tables as $subTable) {
-        //     $
-        // }
-
-        // dd($sample);
-        
+            //add here if for subtable child is for update 
+        }
     }
 
     public static function update($model, $data)
@@ -58,7 +69,7 @@ abstract class RevdojoCRUD
         
     }
 
-     /**
+    /**
      *  process Relations will scan model's related tables 
      *  and will do the given actions (soft delete, force delete, restore)
      */
