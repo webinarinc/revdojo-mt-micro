@@ -9,11 +9,7 @@ abstract class RevdojoCRUD
 
     public static function create($model, $data, $subTable = true)
     {
-
         $model->fill($data);
-
-        $systemId = GenerateHelper::generateSystemId(null,$model::class);
-        $model->system_id = $systemId;
         $model->save();
 
         if ($subTable) {
@@ -41,10 +37,10 @@ abstract class RevdojoCRUD
     protected static function subTablesCreate($model, $relationship, $infos) 
     {
         foreach($infos as $info) {
-            $info['system_id'] = GenerateHelper::generateSystemId(null,$relationship['model']);
             $model->{$relationship['modelRelation']}()->create($info);
 
-            //add here if for subtable child is for update 
+            //here
+            //add update action here
         }
     }
 

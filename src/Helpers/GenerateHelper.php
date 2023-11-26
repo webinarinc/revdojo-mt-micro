@@ -12,10 +12,10 @@ class GenerateHelper
    /**
     * Generate system id manually
     */
-    public static function generateSystemId($prefix, $model = null) 
+    public static function generateSystemId($prefix, $modelClass = null) 
     {
-      if ($model) {
-         $prefix = basename(str_replace('\\', '/', $model));
+      if ($modelClass) {
+         $prefix = basename(str_replace('\\', '/', $modelClass));
       }
 
       $prefix = ConvertHelper::convertToSluggable($prefix, '_');
