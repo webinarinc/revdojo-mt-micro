@@ -9,15 +9,8 @@ use Revdojo\MT\Helpers\GenerateHelper;
 
 trait TenantLink
 {
-    protected static function boot()
+    protected static function bootTenantLink()
     {
-        parent::boot();
         static::addGlobalScope(new TenantScopeGlobal);
-
-        static::creating(function ($model) {
-            if (!$model->system_id) {
-                $model->system_id = GenerateHelper::generateSystemId(null, $model::class);
-            }
-        });
     }
 }
