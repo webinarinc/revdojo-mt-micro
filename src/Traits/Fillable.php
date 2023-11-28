@@ -50,12 +50,20 @@ trait Fillable
 
             try {
                 $return = $method->invoke($model);
-
                 if ($return instanceof Relation) {
+                    $foreignPivotKey = null;
+                    if ((new ReflectionClass($return))->getShortName() == 'BelongsToMany') {
+                        $foreign = (new ReflectionClass($return))->getMethod('getForeignPivotKeyName');
+                        $foreign->setAccessible(true);
+
+                        $foreignPivotKey = $foreign->invoke($return);
+                    }
+
                     $relationships[$method->getName()] = [
                         'type' => (new ReflectionClass($return))->getShortName(),
                         'model' => (new ReflectionClass($return->getRelated()))->getName(),
-                        'modelRelation' => $method->getName()
+                        'modelRelation' => $method->getName(),
+                        'foreignPivotKey' => $foreignPivotKey,
                     ];
                 }
             } catch(ErrorException $e) {}

@@ -40,6 +40,7 @@ class SubDomainServiceProvider extends ServiceProvider
             $domain = TenantDomain::where('sub_domain', $subdomain)->first();
             
             if (!$domain) {
+                Config::set('tenancy.tenant_db', 'base_service');
                 return;
             }
             

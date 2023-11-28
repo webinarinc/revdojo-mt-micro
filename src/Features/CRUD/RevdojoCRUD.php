@@ -7,8 +7,11 @@ use Revdojo\MT\Helpers\GenerateHelper;
 abstract class RevdojoCRUD
 {
 
-    public static function create($model, $data, $subTable = true)
-    {
+    public static function create(
+        $model, 
+        Array $data, 
+        $subTable = true
+    ) {
         $model->fill($data);
         $model->save();
 
@@ -27,20 +30,36 @@ abstract class RevdojoCRUD
         }
 
         foreach ($model->allRelationships() as $relationship) {
-            if ($relationship['type'] == 'HasMany' && array_key_exists($relationship['modelRelation'], $data)) {
+            $relationshipType = $relationship['type'] == 'HasMany' || $relationship['type'] == 'HasOne';
+            if ($relationshipType && array_key_exists($relationship['modelRelation'], $data)) {
                 $infos = collect($data[$relationship['modelRelation']]);
-                SELF::subTablesCreate($model, $relationship, $infos);
+                SELF::subTablesCreate($model, $relationship, $infos, $relationship['type']);
+            }
+
+            if ($relationship['type'] == 'BelongsToMany' && array_key_exists($relationship['foreignPivotKey'], $data)) {
+                $model->{$relationship['modelRelation']}()->sync($data[$relationship['foreignPivotKey']]);
             }
         }
     }
 
-    protected static function subTablesCreate($model, $relationship, $infos) 
-    {
-        foreach($infos as $info) {
-            $model->{$relationship['modelRelation']}()->create($info);
+    protected static function subTablesCreate(
+        $model, 
+        $relationship, 
+        $infos, 
+        $type
+    ) {
 
-            //here
-            //add update action here
+        if ($type == 'HasMany') {
+            foreach($infos as $info) {
+                $model->{$relationship['modelRelation']}()->create($info);
+    
+                //here
+                //add update action here
+            }
+        }
+
+        if ($type == 'HasOne') {
+            $model->{$relationship['modelRelation']}()->create($infos->toArray());
         }
     }
 
