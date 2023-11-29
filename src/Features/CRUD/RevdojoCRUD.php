@@ -37,7 +37,7 @@ abstract class RevdojoCRUD
             }
 
             if ($relationship['type'] == 'BelongsToMany' && array_key_exists($relationship['foreignPivotKey'], $data)) {
-                $model->{$relationship['modelRelation']}()->sync($data[$relationship['foreignPivotKey']]);
+                $model->{$relationship['modelRelation']}()->sync($data[$relationship['foreignPivotKey']], false);
             }
         }
     }
@@ -63,10 +63,15 @@ abstract class RevdojoCRUD
         }
     }
 
-    public static function update($model, $data)
+    public static function update($model, $data, $subTable = true)
     {
         $model->fill($data);
         $model->save();
+
+
+        if ($subTable) {
+            SELF::subTables($model, $data);
+        }
 
         return $model;
     }

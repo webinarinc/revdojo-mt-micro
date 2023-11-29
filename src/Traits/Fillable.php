@@ -51,12 +51,11 @@ trait Fillable
             try {
                 $return = $method->invoke($model);
                 if ($return instanceof Relation) {
+                    
                     $foreignPivotKey = null;
                     if ((new ReflectionClass($return))->getShortName() == 'BelongsToMany') {
-                        $foreign = (new ReflectionClass($return))->getMethod('getForeignPivotKeyName');
-                        $foreign->setAccessible(true);
-
-                        $foreignPivotKey = $foreign->invoke($return);
+                        $pivotModel = (new ReflectionClass($return));
+                        $foreignPivotKey = $pivotModel->getProperty('relatedPivotKey')->getValue($return);
                     }
 
                     $relationships[$method->getName()] = [
