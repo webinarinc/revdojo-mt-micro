@@ -20,6 +20,12 @@ class TenantBase extends BaseTenant implements TenantWithDatabase
     protected $connection = 'mysql_tenant_service';
     protected $table = 'tenant_bases';
 
+    protected static function boot()
+    {
+        parent::boot();
+        static::bootFillable();
+    }
+    
     public function tenant()
     {
         return $this->belongsTo(Tenant::class);

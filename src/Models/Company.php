@@ -13,4 +13,10 @@ class Company extends Model
 
     protected $connection = 'mysql_company_service';
     protected $table = 'companies';
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::bootFillable();
+    }
 }

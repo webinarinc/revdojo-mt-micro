@@ -10,10 +10,16 @@ class TenantDomain extends Model
 {
     use SoftDeletes,
         Fillable;
+        
     protected $connection = 'mysql_tenant_service';
 
     protected $table = 'tenant_domains';
 
+    protected static function boot()
+    {
+        parent::boot();
+        static::bootFillable();
+    }
 
     public function tenant()
     {

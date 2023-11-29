@@ -12,4 +12,10 @@ class Service extends Model
         Fillable;
     protected $connection = 'mysql_base_service';
     protected $table = 'services';
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::bootFillable();
+    }
 }
