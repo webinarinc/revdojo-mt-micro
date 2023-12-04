@@ -41,6 +41,13 @@ abstract class EventBus
         $eventBus->refresh();
     }
 
+    public static function processing($eventBus) 
+    {
+        $eventBus->status = 'processing';
+        $eventBus->save();
+        $eventBus->refresh();
+    }
+
     public static function failed($eventBus, $exception) 
     {
         $eventBus->exception = $exception;
