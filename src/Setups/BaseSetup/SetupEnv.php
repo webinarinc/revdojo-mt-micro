@@ -79,6 +79,8 @@ class SetupEnv
             "FORWARD_DB_PORT={$this->serviceConfigData['FORWARD_DB_PORT']}",
             "APP_PORT={$this->serviceConfigData['APP_PORT']}",
             "VITE_PORT={$this->serviceConfigData['VITE_PORT']}",
+            "REDIS_HOST={$this->serviceConfigData['REDIS_HOST']}",
+            "REDIS_PORT={$this->serviceConfigData['REDIS_PORT']}",
         ];
 
         $envContents = File::get($envFilePath);
