@@ -18,7 +18,7 @@ abstract class EventBus
             'origin' => $origin,
             'destination' => $destination,
             'type' => $type,
-            'payload' => $payload,
+            'payload' => json_encode($payload),
         ];
 
         $eventBugLog = new EventBusLog;
