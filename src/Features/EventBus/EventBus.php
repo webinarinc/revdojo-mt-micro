@@ -1,6 +1,6 @@
 <?php
 
-namespace Revdojo\MT\Features\CRUD;
+namespace Revdojo\MT\Features\EventBus;
 
 use Illuminate\Support\Facades\Redis;
 use Revdojo\MT\Models\EventBusLog;
