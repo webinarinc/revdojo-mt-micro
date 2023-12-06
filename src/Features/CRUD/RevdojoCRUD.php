@@ -51,10 +51,22 @@ abstract class RevdojoCRUD
 
         if ($type == 'HasMany') {
             foreach($infos as $info) {
-                $model->{$relationship['modelRelation']}()->create($info);
-    
-                //here
-                //add update action here
+              //Refractor this 
+                if ($info['id']) {
+                    $relationSubModel = $model->{$relationship['modelRelation']}->where('id', $info['id'])->first();
+
+                    if (!$relationSubModel) {
+                        unset($info['id']);
+                        $model->{$relationship['modelRelation']}()->create($info);
+                    } else {
+                        $relationSubModel->fill($info);
+                        $relationSubModel->save();
+                    }
+
+                } else {
+                    $model->{$relationship['modelRelation']}()->create($info);
+                    
+                }
             }
         }
 
@@ -101,13 +113,19 @@ abstract class RevdojoCRUD
         }
 
         foreach ($model->allRelationships() as $relationship) {
-            if ($relationship['type'] == 'HasMany') {
-                $relatedId = $model->{$relationship['modelRelation']}()->withTrashed()->pluck('id')->toArray();
+            $modelRelationship = $model->{$relationship['modelRelation']}();
+
+            if ($relationship['type'] == 'HasMany' && $modelRelationship->withTrashed()) {
+                $relatedId = $modelRelationship->withTrashed()->pluck('id')->toArray();
                 $relationship['model']::whereIn('id', $relatedId)->{$action}();
             }
 
+            if ($relationship['type'] == 'HasOne' && $modelRelation = $modelRelationship->withTrashed()->first()) {
+                $relationship['model']::whereIn('id', [$modelRelation->id])->{$action}();
+            }
+
             if ($relationship['type'] == 'BelongsToMany' && $action == 'forceDelete') {
-                $model->{$relationship['modelRelation']}()->detach();
+                $modelRelationship->detach();
             }   
         }
     }
