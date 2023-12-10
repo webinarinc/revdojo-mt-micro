@@ -70,6 +70,7 @@ class SetupEnv
             "REVOJO_MT_SERVICE_NAME={$this->serviceConfigData['REVOJO_MT_SERVICE_NAME']}",
             "REVOJO_MT_NAMESPACE={$this->serviceConfigData['REVOJO_MT_NAMESPACE']}",
             "REVOJO_MT_DB_NAME={$this->serviceConfigData['REVOJO_MT_DB_NAME']}",
+            "REVOJO_MT_DB_CONNECTION={$this->serviceConfigData['REVOJO_MT_DB_CONNECTION']}",
             "DB_CONNECTION={$this->serviceConfigData['DB_CONNECTION']}",
             "DB_HOST={$this->serviceConfigData['DB_HOST']}",
             "DB_PORT={$this->serviceConfigData['DB_PORT']}",
@@ -81,6 +82,8 @@ class SetupEnv
             "VITE_PORT={$this->serviceConfigData['VITE_PORT']}",
             "REDIS_HOST={$this->serviceConfigData['REDIS_HOST']}",
             "REDIS_PORT={$this->serviceConfigData['REDIS_PORT']}",
+            "REDIS_QUEUE={$this->serviceConfigData['REVOJO_MT_DB_NAME']}",
+            "QUEUE_CONNECTION=redis",
         ];
 
         $envContents = File::get($envFilePath);

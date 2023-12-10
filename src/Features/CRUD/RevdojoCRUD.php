@@ -52,7 +52,7 @@ abstract class RevdojoCRUD
         if ($type == 'HasMany') {
             foreach($infos as $info) {
               //Refractor this 
-                if ($info['id']) {
+                if (isset($info['id'])) {
                     $relationSubModel = $model->{$relationship['modelRelation']}->where('id', $info['id'])->first();
 
                     if (!$relationSubModel) {
