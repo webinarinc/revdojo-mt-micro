@@ -5,7 +5,6 @@
     "require": {
         "laravel/framework": "^10.28",
         "laravel/sanctum": "^3.3",
-        "stancl/tenancy": "^3.7",
         "predis/predis": "^2.2"
     },
     "autoload": {
