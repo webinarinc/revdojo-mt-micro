@@ -13,14 +13,14 @@ trait Fillable
     protected static function bootFillable()
     {
         static::creating(function ($model) {
-            if (!$model->system_id) {
-                $model->system_id = GenerateHelper::generateSystemId(null, $model::class);
+            if (!$model->id) {
+                $model->id = GenerateHelper::generateSystemId(null, $model::class);
             }
         });
 
         static::saving(function ($model) {
-            if (!$model->system_id) {
-                $model->system_id = GenerateHelper::generateSystemId(null, $model::class);
+            if (!$model->id) {
+                $model->id = GenerateHelper::generateSystemId(null, $model::class);
             }
         });
     }
